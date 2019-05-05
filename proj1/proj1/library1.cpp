@@ -99,57 +99,6 @@ node* ll_insert_at_specific_location(node* head, int x, int loc)
 	return head;
 }
 
-node* ll_intersection(node* head1, node* head2)
-{
-	node *head = 0, *trav = 0;
-	while(head1!=0 && head2!=0)
-	{
-		if(head1->data < head2->data)
-		{
-			head1 = head1->link;
-		}
-		else if(head1->data > head2->data)
-		{
-			head2 = head2->link;
-		}
-		else
-		{
-			node* temp = new node;
-			temp->data = head1->data;
-			temp->link = 0;
-			if(head == 0)
-			{
-				head = temp;
-			}
-			else
-			{
-				trav->link = temp; 
-			}
-			trav = temp;
-			head1 = head1->link;
-			head2 = head2->link;
-		}
-	}
-	return head;
-}
-
-node* ll_last_node_to_first(node* head){
-	if(head == 0 || head->link == 0)
-	{
-		return head;
-	}
-	node* temp = head;
-	while(temp->link->link != 0)
-	{
-		temp = temp->link;
-	}
-	node* last = temp->link;
-	temp->link = 0;
-	last->link = head;
-	head = last;
-	return head;
-}
-
 void ll_reverse_recursive(node** head, node* traverse){
 	if (traverse == 0 || traverse->link == 0) {
 		*head = traverse;
@@ -176,7 +125,6 @@ void ll_reverse_tail_recursive_util(node** head, node* traverse, node* prev) {
 	ll_reverse_tail_recursive_util(head, next, traverse);
 }
 
-
 void ll_reverse(node** head) {
 	node *prev = 0, *curr = *head, *next = *head;
 	while (curr != 0) {
@@ -186,4 +134,132 @@ void ll_reverse(node** head) {
 		curr = next;
 	}
 	*head = prev;
+}
+
+void ll_delete_at_beginning(node** head) {
+	if (*head == 0) {
+		return;
+	}
+	node* temp = *head;
+	*head = (*head)->link;
+	delete temp;
+}
+
+void ll_delete_at_end(node** head) {
+	if (*head == 0 || (*head)->link == 0) {
+		*head = 0;
+		return;
+	}
+	node* traverse = *head;
+	while (traverse->link->link != 0) {
+		traverse = traverse->link;
+	}
+	node* temp = traverse->link;
+	traverse->link = temp->link;
+	delete temp;
+}
+
+void ll_delete_specific_node(node** head, int x) {
+	if (*head == 0) {
+		cout << "List is already empty" << endl;
+		return;
+	}
+	node *prev = 0,*curr = *head;
+	while (curr != 0) {
+		if (curr->data == x) {
+			break;
+		}
+		prev = curr;
+		curr = curr->link;
+	}
+	if (curr == 0) {
+		cout << "Specified Element Doesn't exist in Linked List" << endl;
+		return;
+	}
+	if (prev == 0) {
+		ll_delete_at_beginning(head);
+	}
+	else {
+		prev->link = curr->link;
+		delete curr;
+	}
+
+}
+
+void ll_delete_at_specific_position(node** head, int pos) {
+	if (*head == 0 || pos<=0) {
+		return;
+	}
+	int i = 1;
+	node *prev = 0, *curr = *head;
+	while (curr != 0) {
+		if (i == pos) {
+			break;
+		}
+		i++;
+		prev = curr;
+		curr = curr->link;
+	}
+	if (curr == 0) {
+		cout << "Invalid Position to Delete an element" << endl;
+		return;
+	}
+	if (i == 1) {
+		ll_delete_at_beginning(head);
+	}
+	else {
+		prev->link = curr->link;
+		delete curr;
+	}
+}
+
+node* ll_intersection(node* head1, node* head2)
+{
+	node *head = 0, *trav = 0;
+	while (head1 != 0 && head2 != 0)
+	{
+		if (head1->data < head2->data)
+		{
+			head1 = head1->link;
+		}
+		else if (head1->data > head2->data)
+		{
+			head2 = head2->link;
+		}
+		else
+		{
+			node* temp = new node;
+			temp->data = head1->data;
+			temp->link = 0;
+			if (head == 0)
+			{
+				head = temp;
+			}
+			else
+			{
+				trav->link = temp;
+			}
+			trav = temp;
+			head1 = head1->link;
+			head2 = head2->link;
+		}
+	}
+	return head;
+}
+
+node* ll_last_node_to_first(node* head) {
+	if (head == 0 || head->link == 0)
+	{
+		return head;
+	}
+	node* temp = head;
+	while (temp->link->link != 0)
+	{
+		temp = temp->link;
+	}
+	node* last = temp->link;
+	temp->link = 0;
+	last->link = head;
+	head = last;
+	return head;
 }

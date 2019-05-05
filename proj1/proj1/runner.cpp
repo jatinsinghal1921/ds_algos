@@ -11,7 +11,7 @@ int main() {
 	head = ll_insert_at_beginning(head, 2);
 	head = ll_insert_at_beginning(head, 1);
 	ll_print(head);
-	ll_reverse(&head);
+	ll_delete_at_specific_position(&head, 1);
 	ll_print(head);
 }
 

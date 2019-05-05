@@ -17,3 +17,7 @@ void ll_reverse_recursive(node** head, node* traverse);
 void ll_reverse_tail_recursive(node** head);
 void ll_reverse_tail_recursive_util(node** head, node* traverse, node* prev);
 void ll_reverse(node** head);
+void ll_delete_at_beginning(node** head);
+void ll_delete_at_end(node** head);
+void ll_delete_specific_node(node** head, int x);
+void ll_delete_at_specific_position(node** head, int pos);
