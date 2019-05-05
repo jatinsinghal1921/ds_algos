@@ -6,7 +6,14 @@ public:
 };
 
 // Declaring Function
-void printLL(node* head);
-node* insert_at_beginning(node* head, int x);
-node* intersection_of_ll(node* head1, node* head2);
-node* last_node_to_first(node* head);
+void ll_print(node* head);
+node* ll_insert_at_beginning(node* head, int x);
+node* ll_intersection(node* head1, node* head2);
+node* ll_last_node_to_first(node* head);
+node* ll_insert_at_end(node* head,int x);
+node* ll_insert_after_specific_node(node* head, int x, int node_value);
+node* ll_insert_at_specific_location(node* head, int x, int loc);
+void ll_reverse_recursive(node** head, node* traverse);
+void ll_reverse_tail_recursive(node** head);
+void ll_reverse_tail_recursive_util(node** head, node* traverse, node* prev);
+void ll_reverse(node** head);

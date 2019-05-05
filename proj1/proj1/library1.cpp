@@ -4,8 +4,9 @@
 using namespace std;
 
 
-void printLL(node* head) 
+void ll_print(node* head) 
 {
+	cout << "Printing The Elements of Linked List" << endl;
 	while (head != 0) {
 		cout << head->data << " ";
 		cout << endl;
@@ -13,7 +14,7 @@ void printLL(node* head)
 	}
 }
 
-node* insert_at_beginning(node* head, int x) 
+node* ll_insert_at_beginning(node* head, int x) 
 {
 	node* temp = new node;
 	temp->data = x;
@@ -22,7 +23,83 @@ node* insert_at_beginning(node* head, int x)
 	return head;
 }
 
-node* intersection_of_ll(node* head1, node* head2)
+node* ll_insert_at_end(node* head,int x){
+	node* temp = new node;
+	temp->data = x;
+	temp->link = 0;
+	if(head == 0){
+		return temp;
+	}
+	node* traverse = head;
+	while(traverse->link!=0)
+	{
+		traverse = traverse->link;
+	}
+	traverse->link = temp;
+	return head;
+}
+
+node* ll_insert_after_specific_node(node* head, int x, int node_value){
+	node* traverse = head;
+	while(traverse != 0)
+	{
+		if(traverse->data == node_value)
+		{
+			break;
+		}
+		traverse = traverse->link;
+	}
+	if(traverse == 0){
+		cout<<"There is no node present with that value."<<endl;
+		return head;
+	}
+	node* temp = new node;
+	temp->data = x;
+	temp->link = traverse->link;
+	traverse->link = temp->link;
+	return head;
+}
+
+node* ll_insert_at_specific_location(node* head, int x, int loc)
+{
+	if (loc < 1)
+	{
+		cout << "Nodes Location start from 1. So please enter a valid Location" << endl;
+		return head;
+	}
+	node *prev = 0, *temp = head;
+	int i = 1;
+	while(temp!=0){
+		if(i == loc){
+			break;
+		}
+		prev = temp;
+		temp = temp->link;
+		i++;
+	}
+	if(i<loc)
+	{
+		cout<<"Invalid Location to add New Node"<<endl;
+		return head;
+	}
+
+	node* temp1 = new node;
+	temp1->data = x;
+
+	if(prev == 0)
+	{
+		temp1->link = head;
+		head = temp1;
+	}
+	else
+	{
+		temp1->link = temp;
+		prev->link = temp1;
+	}
+	return head;
+}
+
+node* ll_intersection(node* head1, node* head2)
 {
 	node *head = 0, *trav = 0;
 	while(head1!=0 && head2!=0)
@@ -56,7 +133,7 @@ node* intersection_of_ll(node* head1, node* head2)
 	return head;
 }
 
-node* last_node_to_first(node* head){
+node* ll_last_node_to_first(node* head){
 	if(head == 0 || head->link == 0)
 	{
 		return head;
@@ -71,4 +148,42 @@ node* last_node_to_first(node* head){
 	last->link = head;
 	head = last;
 	return head;
+}
+
+void ll_reverse_recursive(node** head, node* traverse){
+	if (traverse == 0 || traverse->link == 0) {
+		*head = traverse;
+		return;
+	}
+	ll_reverse_recursive(head, traverse->link);
+	traverse->link->link = traverse;
+	traverse->link = 0;
+}
+
+void ll_reverse_tail_recursive(node** head) {
+	ll_reverse_tail_recursive_util(head, *head, 0);
+}
+
+void ll_reverse_tail_recursive_util(node** head, node* traverse, node* prev) {
+	if (traverse == 0) {
+		return;
+	}
+	if (traverse->link == 0) {
+		*head = traverse;
+	}
+	node* next = traverse->link;
+	traverse->link = prev;
+	ll_reverse_tail_recursive_util(head, next, traverse);
+}
+
+
+void ll_reverse(node** head) {
+	node *prev = 0, *curr = *head, *next = *head;
+	while (curr != 0) {
+		next = curr->link;
+		curr->link = prev;
+		prev = curr;
+		curr = next;
+	}
+	*head = prev;
 }
