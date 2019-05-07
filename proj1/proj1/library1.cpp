@@ -263,3 +263,137 @@ node* ll_last_node_to_first(node* head) {
 	head = last;
 	return head;
 }
+
+int ll_length(node* head) {
+	int count = 0;
+	while (head != 0) {
+		count = count + 1;
+		head = head->link;
+	}
+	return count;
+}
+
+int ll_length_tail_recursive(node* head) {
+	int count = 0;
+	return ll_length_tail_recursive_util(head,count);
+}
+
+int ll_length_tail_recursive_util(node* head, int count) {
+	if (head == 0) {
+		return count;
+	}
+	count = count + 1;
+	return ll_length_tail_recursive_util(head->link, count);
+}
+
+bool ll_search_an_element(node* head, int x) {
+	while (head != 0) {
+		if (head->data == x) {
+			return true;
+		}
+		head = head->link;
+	}
+	return false;
+}
+
+bool ll_search_an_element_tail_recursive(node* head, int x) {
+	if (head == 0) {
+		return false;
+	}
+	if (head->data == x) {
+		return true;
+	}
+	return ll_search_an_element_tail_recursive(head->link, x);
+}
+
+int ll_nth_node_from_start(node* head, int n) {
+	if (head == 0) {
+		cout << "List is Empty" << endl;
+		return -1;
+	}
+	if (n < 0) {
+		cout << " You have entered an invalid position" << endl;
+		return -1;
+	}
+	while (head != 0) {
+		if (n == 0) {
+			return head->data;
+		}
+		n--;
+		head = head->link;
+	}
+	cout << "You have entered invalid position" << endl;
+	return -1;
+}
+
+int ll_nth_node_from_start_tail_recursive(node* head, int n) {
+	if (head == 0 || n < 0) {
+		cout << "Entered Position is invalid" << endl;
+		return -1;
+	}
+	if (n == 0) {
+		return head->data;
+	}
+	n--;
+	return ll_nth_node_from_start_tail_recursive(head->link, n);
+}
+
+int ll_nth_node_from_last(node* head, int n) {
+	if (head == 0) {
+		cout << "Linked List is Empty" << endl;
+		return -1;
+	}
+	if (n <= 0) {
+		cout << "Entered position is invalid" << endl;
+		return -1;
+	}
+	node *fast = head, *slow = head;
+	while (fast != 0 && n != 1)
+	{
+		n--;
+		fast = fast->link;
+	}
+	if (fast == 0) {
+		cout << "Entered Position is Invalid" << endl;
+		return -1;
+	}
+	while (fast->link != 0) {
+		slow = slow->link;
+		fast = fast->link;
+	}
+	return slow->data;
+}
+
+node* ll_segregate_even_odd_nodes(node* head) {
+	node *prev = 0, *curr = head, *last_even = 0, *temp;
+	while (curr != 0) {
+		if ((curr->data % 2) != 0) {
+			prev = curr;
+			curr = curr->link;
+		}
+		else {
+			if (prev == 0 || ((prev->data % 2) == 0)) {
+				prev = curr;
+				last_even = curr;
+				curr = curr->link;
+			}
+			else {
+				prev->link = curr->link;
+				temp = curr;
+				curr = curr->link;
+
+				if (last_even == 0) {
+					temp->link = head;
+					head = temp;
+					last_even = head;
+				}
+				else {
+					temp->link = last_even->link;
+					last_even->link = temp;
+					last_even = temp;
+				}
+			}
+		}
+	}
+	return head;
+}
